@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JSON Viewer</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Fortnite different than yesterday items</h1>
+
+  <button onclick="fetchAndDisplayJson()">Fetch JSON</button>
+
+  <div id="output"></div>
+
+  <script>
+    function fetchAndDisplayJson() {
+      const apiUrl = 'http://192.168.1.105:8080/shop';
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => displayJson(data))
+        .catch(error => console.error('Error fetching JSON:', error));
+    }
+
+    function displayJson(jsonData) {
+      let new_list = changeJSON(jsonData)
+      const outputContainer = document.getElementById('output');
+      for (let i = 0; i < new_list.length; i++) {
+        outputContainer.innerHTML += '<pre>' + new_list[i] + '</pre>';
+      }
+    }
+
+    function changeJSON(data) {
+      let list = [];
+      item_data = data["items"];
+      for (let i = 0; i < item_data.length; i=i+2) {
+        list.push(`Name: ${item_data[i]}, Type: ${item_data[i+1]}`);
+      }
+      return list
+    }
+  </script>
+
+</body>
+</html>
