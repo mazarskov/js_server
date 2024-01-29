@@ -1,2 +1,6 @@
-/*
-!/server.exe
+# Ignore everything
+*
+
+# But not these files...
+!.gitignore
+!server.exe
